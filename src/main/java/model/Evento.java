@@ -8,8 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -38,7 +38,7 @@ public class Evento {
 	@Column
 	private Integer numeroMassimoPartecipanti;
 
-	@OneToOne
+	@ManyToOne
 	@Cascade(CascadeType.PERSIST)
 	private Location location;
 

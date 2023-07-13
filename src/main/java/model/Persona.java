@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -41,6 +42,7 @@ public class Persona {
 	private Sesso sesso;
 
 	@OneToMany(mappedBy = "persona")
+	@OrderColumn(name = "eventi.dataevento")
 	private Set<Partecipazione> listaPartecipazioni;
 
 	public Persona(String nome, String cognome, String email, LocalDate dataDiNascita, Sesso sesso) {

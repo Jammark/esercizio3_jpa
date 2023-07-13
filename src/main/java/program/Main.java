@@ -36,8 +36,7 @@ public class Main {
 		Evento ev1 = new Evento("Evento 4", LocalDate.of(2001, 6, 11), "Quarto evento", TipoEvento.PRIVATO, 60, l1);
 		Evento ev2 = new Evento("Evento 5", LocalDate.of(2000, 8, 11), "Quinto evento", TipoEvento.PUBBLICO, 160, l2);
 
-		Partecipazione part1 = new Partecipazione(p1, ev1, StatoPartecipazione.CONFERMATA);
-		Partecipazione part2 = new Partecipazione(p2, ev2, StatoPartecipazione.DA_CONFERMARE);
+
 
 		EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
 
@@ -49,13 +48,16 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 
 		try {
-		dao.save(ev1);
-			dao.save(ev2);
-		dao.refresh(ev1);
-			dao.refresh(ev2);
+			// dao.save(ev1);
+			// dao.save(ev2);
+			ev1 = dao.getById(1l);
+			ev2 = dao.getById(3l);
+
+			Partecipazione part1 = new Partecipazione(p1, ev1, StatoPartecipazione.CONFERMATA);
+			Partecipazione part2 = new Partecipazione(p1, ev2, StatoPartecipazione.DA_CONFERMARE);
 			log.info("Lettura tabella eventi: " + dao.getById(ev2.getId()));
 
-			daoP.save(p2);
+			// daoP.save(p2);
 			daoP.save(p1);
 
 			daoPart.save(part2);
@@ -63,14 +65,18 @@ public class Main {
 
 			dao.refresh(ev1);
 			dao.refresh(ev2);
+			daoP.refresh(p1);
 
 			log.info("eventi: " + ev1);
 			log.info("eventi: " + ev2);
 
+			p1.getListaPartecipazioni().forEach(p -> log.info("Partecipazione: " + p));
+
 			log.info("Inserire...");
 			sc.nextLine();
-			dao.delete(ev1);
+			// dao.delete(ev1);
 		} finally {
+			sc.close();
 			dao.close();
 			JpaUtil.close();
 		}
